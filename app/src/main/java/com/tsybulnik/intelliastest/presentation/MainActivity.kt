@@ -8,6 +8,7 @@ import android.widget.Toast
 import com.tsybulnik.intelliastest.Api
 import com.tsybulnik.intelliastest.R
 import com.tsybulnik.intelliastest.RetrofitClient
+import com.tsybulnik.intelliastest.domain.entities.Meaning
 import com.tsybulnik.intelliastest.domain.entities.Word
 import com.tsybulnik.intelliastest.domain.entities.WordItem
 import retrofit2.Call
@@ -27,12 +28,15 @@ class MainActivity : AppCompatActivity() {
 
         val retrofit =
             RetrofitClient.getClient("https://api.dictionaryapi.dev/").create(Api::class.java)
-        retrofit.getDataFromWord("hello").enqueue(object : Callback<List<WordItem>>{
+        retrofit.getDataFromWord("hello").enqueue(object : Callback<List<WordItem>> {
             override fun onResponse(
                 call: Call<List<WordItem>>,
                 response: Response<List<WordItem>>
             ) {
-                Log.d("MyLog","Тест "+response.body()!!.last().meanings[1].partOfSpeech)
+                Log.d("MyLog", "Тест " + response.body()!!.last().meanings[1].definitions)
+                Log.d("MyLog", "meanings.size " + response.body()!!.last().meanings.size)
+                Log.d("MyLog", "meanings.size " + response.body()!!.last().meanings[0].definitions[0].definition)
+
                 tvMainWord.setText(response.body()!!.last().word)
                 tvPhonetic.setText(response.body()!!.last().phonetic)
 
@@ -42,8 +46,6 @@ class MainActivity : AppCompatActivity() {
                 TODO("Not yet implemented")
             }
 
-
         })
-
     }
 }

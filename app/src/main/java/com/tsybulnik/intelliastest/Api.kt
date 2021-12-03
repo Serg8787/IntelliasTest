@@ -1,5 +1,6 @@
 package com.tsybulnik.intelliastest
 
+import com.tsybulnik.intelliastest.domain.entities.Meaning
 import com.tsybulnik.intelliastest.domain.entities.Word
 import com.tsybulnik.intelliastest.domain.entities.WordItem
 import retrofit2.Call
@@ -12,4 +13,6 @@ interface Api {
 
     @GET("api/v2/entries/en/{wordEng}")
     fun getDataFromWord(@Path("wordEng") wordEng:String): Call<List<WordItem>>
+
+
 }
