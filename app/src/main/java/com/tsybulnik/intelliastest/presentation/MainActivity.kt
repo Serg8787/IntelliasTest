@@ -35,7 +35,16 @@ class MainActivity : AppCompatActivity() {
             ) {
                 Log.d("MyLog", "Тест " + response.body()!!.last().meanings[1].definitions)
                 Log.d("MyLog", "meanings.size " + response.body()!!.last().meanings.size)
-                Log.d("MyLog", "meanings.size " + response.body()!!.last().meanings[0].definitions[0].definition)
+                Log.d("MyLog", "meanings.toHashSet() " + response.body()!!.last().meanings[0].partOfSpeech)
+                Log.d("MyLog", "meanings.toHashSet() " + response.body()!!.last().meanings[0].definitions[0].definition)
+                val size:Int = response.body()!!.last().meanings.size
+                for(i in 0..size){
+                    val map = mutableMapOf<String,String>()
+
+                    map.put(response.body()!!.last().meanings[i].partOfSpeech,response.body()!!.last().meanings[i].definitions[i].definition)
+                    Log.d("MyLog", "map " + map.toString() )
+                }
+//
 
                 tvMainWord.setText(response.body()!!.last().word)
                 tvPhonetic.setText(response.body()!!.last().phonetic)
