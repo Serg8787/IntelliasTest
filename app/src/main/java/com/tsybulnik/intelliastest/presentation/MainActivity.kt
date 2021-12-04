@@ -5,9 +5,11 @@ import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.RecyclerView
 import com.tsybulnik.intelliastest.Api
 import com.tsybulnik.intelliastest.R
 import com.tsybulnik.intelliastest.RetrofitClient
+import com.tsybulnik.intelliastest.WordAdapter
 import com.tsybulnik.intelliastest.domain.entities.WordItem
 import retrofit2.Call
 import retrofit2.Callback
@@ -22,10 +24,13 @@ class MainActivity : AppCompatActivity() {
 
         tvMainWord = findViewById(R.id.tvMainWord)
         tvPhonetic = findViewById(R.id.tvPhonetic)
+        val recyclerView: RecyclerView = findViewById(R.id.recycler)
+
+
 
         val retrofit =
             RetrofitClient.getClient("https://api.dictionaryapi.dev/").create(Api::class.java)
-        retrofit.getDataFromWord("hello").enqueue(object : Callback<List<WordItem>> {
+        retrofit.getDataFromWord("key").enqueue(object : Callback<List<WordItem>> {
             override fun onResponse(
                 call: Call<List<WordItem>>,
                 response: Response<List<WordItem>>
@@ -57,6 +62,8 @@ class MainActivity : AppCompatActivity() {
                         arrayPartOfSpeech.zip(arraydefinition)
                             .toMap()
                     Log.d("MyLog", "map " + map)
+                    recyclerView.adapter = WordAdapter(map)
+
 
                     tvMainWord.setText(response.body()!!.last().word)
                     tvPhonetic.setText(response.body()!!.last().phonetic)

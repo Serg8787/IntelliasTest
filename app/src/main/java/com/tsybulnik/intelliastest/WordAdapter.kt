@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 
-class WordAdapter(val hashMap: HashMap<String,String>) :  RecyclerView.Adapter<WordAdapter.ViewHolder>() {
+class WordAdapter(val hashMap: Map<String?, String?>) :  RecyclerView.Adapter<WordAdapter.ViewHolder>() {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         var partOfSpech: TextView? = null
         var definion: TextView? = null
@@ -26,16 +26,13 @@ class WordAdapter(val hashMap: HashMap<String,String>) :  RecyclerView.Adapter<W
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-//        holder.partOfSpech?.text = hashMap
-        val keysFromMap:Array<String> = hashMap.keys.toTypedArray()
+        val keysFromMap:Array<String?> = hashMap.keys.toTypedArray()
         holder.partOfSpech?.text = keysFromMap[position]
-        val keyFromMap:Array<String> = hashMap.values.toTypedArray()
+        val keyFromMap:Array<String?> = hashMap.values.toTypedArray()
         holder.definion?.text = keyFromMap[position]
     }
 
     override fun getItemCount(): Int {
         return  hashMap.size
     }
-
-
 }
