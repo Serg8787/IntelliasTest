@@ -19,7 +19,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-//        Log.d("MyLog","Тест")
 
         tvMainWord = findViewById(R.id.tvMainWord)
         tvPhonetic = findViewById(R.id.tvPhonetic)
@@ -35,32 +34,36 @@ class MainActivity : AppCompatActivity() {
 //                Log.d("MyLog", "meanings.size " + response.body()!!.last().meanings.size)
 //                Log.d("MyLog", "meanings.toHashSet() " + response.body()!!.last().meanings[0].partOfSpeech)
 //                Log.d("MyLog", "meanings.toHashSet() " + response.body()!!.last().meanings[0].definitions[0].definition)
+                val size: Int = response.body()!!.last().meanings.size
                 Log.d("MyLog", response.isSuccessful.toString())
+                val arrayPartOfSpeech = arrayOfNulls<String?>(size)
+                val arraydefinition = arrayOfNulls<String?>(size)
                 if (response.isSuccessful) {
-                    val size: Int = response.body()!!.last().meanings.size
-//                Log.d("MyLog",size.toString())
                     for (i in 0 until size) {
-                        val arrayPartOfSpeech = arrayOfNulls<String?>(size)
                         for (i in 0 until size) {
                             arrayPartOfSpeech[i] = response.body()!!.last().meanings[i].partOfSpeech
                         }
                         Log.d("MyLog", "arrayPartOfSpeech " + arrayPartOfSpeech[i].toString())
                     }
                     for (i in 0 until size) {
-                        val arraydefinition = arrayOfNulls<String?>(size)
-//                    Log.d("MyLog", "i"+i.toString() )
+
                         for (i in 0 until size) {
                             arraydefinition[i] =
                                 response.body()!!.last().meanings[i].definitions[0].definition
                         }
                         Log.d("MyLog", "arraydefinition " + arraydefinition[i].toString())
                     }
-//
-                tvMainWord.setText(response.body()!!.last().word)
-                tvPhonetic.setText(response.body()!!.last().phonetic)
+                    val map: Map<String?, String?> =
+                        arrayPartOfSpeech.zip(arraydefinition)
+                            .toMap()
+                    Log.d("MyLog", "map " + map)
+
+                    tvMainWord.setText(response.body()!!.last().word)
+                    tvPhonetic.setText(response.body()!!.last().phonetic)
 
                 } else {
-                Toast.makeText(applicationContext,"Введите кор. слово",Toast.LENGTH_LONG).show()
+                    Toast.makeText(applicationContext, "Введите кор. слово", Toast.LENGTH_LONG)
+                        .show()
 
                 }
             }
