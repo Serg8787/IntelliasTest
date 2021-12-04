@@ -28,20 +28,15 @@ class MainActivity : AppCompatActivity() {
 
         val retrofit =
             RetrofitClient.getClient("https://api.dictionaryapi.dev/").create(Api::class.java)
-        retrofit.getDataFromWord("key").enqueue(object : Callback<List<WordItem>> {
+        retrofit.getDataFromWord("hello").enqueue(object : Callback<List<WordItem>> {
             override fun onResponse(
                 call: Call<List<WordItem>>,
-                response: Response<List<WordItem>>
-            ) {
-//                Log.d("MyLog", "Тест " + response.body()!!.last().meanings[1].definitions)
-//                Log.d("MyLog", "meanings.size " + response.body()!!.last().meanings.size)
-//                Log.d("MyLog", "meanings.toHashSet() " + response.body()!!.last().meanings[0].partOfSpeech)
-//                Log.d("MyLog", "meanings.toHashSet() " + response.body()!!.last().meanings[0].definitions[0].definition)
+                response: Response<List<WordItem>> ) {
+                if (response.isSuccessful) {
                 val size: Int = response.body()!!.last().meanings.size
                 Log.d("MyLog", response.isSuccessful.toString())
                 val arrayPartOfSpeech = arrayOfNulls<String?>(size)
                 val arraydefinition = arrayOfNulls<String?>(size)
-                if (response.isSuccessful) {
                     for (i in 0 until size) {
                         for (i in 0 until size) {
                             arrayPartOfSpeech[i] = response.body()!!.last().meanings[i].partOfSpeech
@@ -49,7 +44,6 @@ class MainActivity : AppCompatActivity() {
                         Log.d("MyLog", "arrayPartOfSpeech " + arrayPartOfSpeech[i].toString())
                     }
                     for (i in 0 until size) {
-
                         for (i in 0 until size) {
                             arraydefinition[i] =
                                 response.body()!!.last().meanings[i].definitions[0].definition
@@ -61,15 +55,12 @@ class MainActivity : AppCompatActivity() {
                             .toMap()
                     Log.d("MyLog", "map " + map)
                     recyclerView.adapter = WordAdapter(map)
-
-
                     tvMainWord.setText(response.body()!!.last().word)
                     tvPhonetic.setText(response.body()!!.last().phonetic)
 
                 } else {
                     Toast.makeText(applicationContext, "Введите корректное слово", Toast.LENGTH_LONG)
                         .show()
-
                 }
             }
 
