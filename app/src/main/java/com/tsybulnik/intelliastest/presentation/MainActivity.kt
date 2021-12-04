@@ -26,8 +26,6 @@ class MainActivity : AppCompatActivity() {
         tvPhonetic = findViewById(R.id.tvPhonetic)
         val recyclerView: RecyclerView = findViewById(R.id.recycler)
 
-
-
         val retrofit =
             RetrofitClient.getClient("https://api.dictionaryapi.dev/").create(Api::class.java)
         retrofit.getDataFromWord("key").enqueue(object : Callback<List<WordItem>> {
@@ -69,7 +67,7 @@ class MainActivity : AppCompatActivity() {
                     tvPhonetic.setText(response.body()!!.last().phonetic)
 
                 } else {
-                    Toast.makeText(applicationContext, "Введите кор. слово", Toast.LENGTH_LONG)
+                    Toast.makeText(applicationContext, "Введите корректное слово", Toast.LENGTH_LONG)
                         .show()
 
                 }
