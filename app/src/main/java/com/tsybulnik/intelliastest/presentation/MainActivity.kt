@@ -23,7 +23,7 @@ import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
     lateinit var tvMainWord: TextView
-    lateinit var tvPhoneticUK: TextView
+    lateinit var tvPhonetic: TextView
     lateinit var clPhonetic:ConstraintLayout
     lateinit var btSearch: Button
     lateinit var etWord: EditText
@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         tvMainWord = findViewById(R.id.tvMainWord)
-        tvPhoneticUK = findViewById(R.id.tvPhonetic)
+        tvPhonetic = findViewById(R.id.tvPhonetic)
         etWord = findViewById(R.id.etEnterWord)
         clPhonetic = findViewById(R.id.clPhonetic)
         val recyclerView: RecyclerView = findViewById(R.id.recycler)
@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         btSearch = findViewById(R.id.btSearch)
         btSearch.setOnClickListener {
             hideKeybord()
-            val word: String = etWord.text.trim().toString()
+            val word: String = etWord.text.toString()
             val retrofit =
                 RetrofitClient.getClient("https://api.dictionaryapi.dev/").create(Api::class.java)
             retrofit.getDataFromWord(word).enqueue(object : Callback<List<WordItem>> {
@@ -57,14 +57,14 @@ class MainActivity : AppCompatActivity() {
                         for (i in 0 until size) {
                             for (i in 0 until size) {
                                 arrayPartOfSpeech[i] =
-                                    response.body()!![0].meanings[i].partOfSpeech
+                                    response.body()!!.first().meanings[i].partOfSpeech
                             }
                             Log.d("MyLog", "arrayPartOfSpeech " + arrayPartOfSpeech[i].toString())
                         }
                         for (i in 0 until size) {
                             for (i in 0 until size) {
                                 arraydefinition[i] =
-                                    response.body()!![0].meanings[i].definitions[0].definition
+                                    response.body()!!.first().meanings[i].definitions.first().definition
                             }
                             Log.d("MyLog", "arraydefinition " + arraydefinition[i].toString())
                         }
@@ -73,12 +73,12 @@ class MainActivity : AppCompatActivity() {
                                 .toMap()
                         Log.d("MyLog", "map " + map)
                         recyclerView.adapter = WordAdapter(map)
-                        tvMainWord.setText(response.body()!![0].word)
-                        tvPhoneticUK.setText("[ ${response.body()!![0].phonetic} ]")
-                        if (response.body()!!.last().phonetics.isNotEmpty()){
+                        tvMainWord.setText(response.body()!!.first().word)
+                        tvPhonetic.setText("[ ${response.body()!!.first().phonetic} ]")
+                        if (response.body()!!.first().phonetics.isNotEmpty()){
                             clPhonetic.visibility = View.VISIBLE
-                            uri = "https:" + response.body()!![0].phonetics[0].audio
-                            Log.d("MyLog", "audio " + response.body()!!.last().phonetics[0].audio)
+                            uri = "https:" + response.body()!!.first().phonetics.first().audio
+                            Log.d("MyLog", "audio " + response.body()!!.last().phonetics.first().audio)
                         } else {
                             Log.d("MyLog", " not audio")
                             clPhonetic.visibility = View.INVISIBLE
@@ -93,7 +93,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
                 override fun onFailure(call: Call<List<WordItem>>, t: Throwable) {
-                    Toast.makeText(applicationContext, "Ошибка", Toast.LENGTH_LONG).show()
+                    Toast.makeText(applicationContext, "Ошибка запроса! Возможно пропал интернет", Toast.LENGTH_LONG).show()
                 }
             })
             etWord.text.clear()
