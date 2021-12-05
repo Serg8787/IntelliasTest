@@ -63,11 +63,9 @@ class MainActivity : AppCompatActivity() {
                         .show()
                 }
             }
-
             override fun onFailure(call: Call<List<WordItem>>, t: Throwable) {
                 Toast.makeText(applicationContext, "Ошибка", Toast.LENGTH_LONG).show()
             }
-
         })
     }
 }
