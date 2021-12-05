@@ -27,7 +27,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            android:hint="partOfSpech"
+            android:hint="PartOfSpech"
             android:paddingEnd="3dp"
             android:gravity="right"
             android:textStyle="bold"
