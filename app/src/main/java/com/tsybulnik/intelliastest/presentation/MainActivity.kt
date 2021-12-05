@@ -1,9 +1,13 @@
 package com.tsybulnik.intelliastest.presentation
 
+import android.content.Context
 import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.os.Bundle
+import android.text.InputType
 import android.util.Log
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
@@ -28,6 +32,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
         tvMainWord = findViewById(R.id.tvMainWord)
         tvPhonetic = findViewById(R.id.tvPhonetic)
         btSound = findViewById(R.id.btSound)
@@ -36,6 +41,7 @@ class MainActivity : AppCompatActivity() {
 
         btSearch = findViewById(R.id.btSearch)
         btSearch.setOnClickListener {
+            hideKeybord()
             val word: String = etWord.text.toString()
             val retrofit =
                 RetrofitClient.getClient("https://api.dictionaryapi.dev/").create(Api::class.java)
@@ -70,7 +76,16 @@ class MainActivity : AppCompatActivity() {
                         recyclerView.adapter = WordAdapter(map)
                         tvMainWord.setText(response.body()!!.last().word)
                         tvPhonetic.setText("[ ${response.body()!!.last().phonetic} ]")
-                        uri = "https:" + response.body()!!.last().phonetics[0].audio
+                        if (response.body()!!.last().phonetics.isNotEmpty()){
+                            btSound.visibility = View.VISIBLE
+                            tvPhonetic.visibility = View.VISIBLE
+                            uri = "https:" + response.body()!!.last().phonetics[0].audio
+                            Log.d("MyLog", "audio" + response.body()!!.last().phonetics[0].audio)
+                        } else {
+                            Log.d("MyLog", " not audio")
+                            btSound.visibility = View.INVISIBLE
+                            tvPhonetic.visibility = View.INVISIBLE
+                        }
 
                     } else {
                         Toast.makeText(
@@ -85,9 +100,10 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(applicationContext, "Ошибка", Toast.LENGTH_LONG).show()
                 }
             })
-            etWord.text.clear()
-        }
 
+            etWord.text.clear()
+
+        }
         btSound.setOnClickListener {
             playSound()
         }
@@ -107,5 +123,13 @@ class MainActivity : AppCompatActivity() {
             start()
         }
 
+    }
+    fun hideKeybord(){
+        val view: View? = this.currentFocus
+            if (view != null) {
+                val imm: InputMethodManager =
+                    getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0)
+            }
     }
 }

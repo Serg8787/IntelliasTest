@@ -11,6 +11,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="Введите слово на анг"
+        android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        android:inputType="text"
+        android:imeOptions="actionDone"
         android:minHeight="48dp"
         app:layout_constraintBottom_toTopOf="@+id/btSearch"
         app:layout_constraintEnd_toEndOf="@+id/btSearch"
@@ -60,6 +63,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/tvPhonetic"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginEnd="30dp"
+        android:visibility="invisible"
         app:layout_constraintStart_toEndOf="@+id/tvPhonetic"
         app:layout_constraintTop_toTopOf="@+id/tvPhonetic" />
 
@@ -69,11 +73,12 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="15dp"
+        android:layout_marginTop="10dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@+id/etEnterWord"
         app:layout_constraintEnd_toEndOf="@+id/etEnterWord"
         app:layout_constraintStart_toStartOf="@+id/etEnterWord"
-        app:layout_constraintTop_toBottomOf="@+id/btSound" />
+        app:layout_constraintTop_toBottomOf="@+id/tvPhonetic" />
 
 
     <Button
