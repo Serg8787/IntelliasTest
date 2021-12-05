@@ -32,7 +32,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
         tvMainWord = findViewById(R.id.tvMainWord)
         tvPhonetic = findViewById(R.id.tvPhonetic)
         btSound = findViewById(R.id.btSound)
@@ -42,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         btSearch = findViewById(R.id.btSearch)
         btSearch.setOnClickListener {
             hideKeybord()
-            val word: String = etWord.text.toString()
+            val word: String = etWord.text.trim().toString()
             val retrofit =
                 RetrofitClient.getClient("https://api.dictionaryapi.dev/").create(Api::class.java)
             retrofit.getDataFromWord(word).enqueue(object : Callback<List<WordItem>> {
@@ -58,14 +57,14 @@ class MainActivity : AppCompatActivity() {
                         for (i in 0 until size) {
                             for (i in 0 until size) {
                                 arrayPartOfSpeech[i] =
-                                    response.body()!!.last().meanings[i].partOfSpeech
+                                    response.body()!![0].meanings[i].partOfSpeech
                             }
                             Log.d("MyLog", "arrayPartOfSpeech " + arrayPartOfSpeech[i].toString())
                         }
                         for (i in 0 until size) {
                             for (i in 0 until size) {
                                 arraydefinition[i] =
-                                    response.body()!!.last().meanings[i].definitions[0].definition
+                                    response.body()!![0].meanings[i].definitions[0].definition
                             }
                             Log.d("MyLog", "arraydefinition " + arraydefinition[i].toString())
                         }
@@ -74,19 +73,18 @@ class MainActivity : AppCompatActivity() {
                                 .toMap()
                         Log.d("MyLog", "map " + map)
                         recyclerView.adapter = WordAdapter(map)
-                        tvMainWord.setText(response.body()!!.last().word)
-                        tvPhonetic.setText("[ ${response.body()!!.last().phonetic} ]")
+                        tvMainWord.setText(response.body()!![0].word)
+                        tvPhonetic.setText("[ ${response.body()!![0].phonetic} ]")
                         if (response.body()!!.last().phonetics.isNotEmpty()){
                             btSound.visibility = View.VISIBLE
                             tvPhonetic.visibility = View.VISIBLE
-                            uri = "https:" + response.body()!!.last().phonetics[0].audio
-                            Log.d("MyLog", "audio" + response.body()!!.last().phonetics[0].audio)
+                            uri = "https:" + response.body()!![0].phonetics[0].audio
+                            Log.d("MyLog", "audio " + response.body()!!.last().phonetics[0].audio)
                         } else {
                             Log.d("MyLog", " not audio")
                             btSound.visibility = View.INVISIBLE
                             tvPhonetic.visibility = View.INVISIBLE
                         }
-
                     } else {
                         Toast.makeText(
                             applicationContext,
@@ -100,9 +98,7 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(applicationContext, "Ошибка", Toast.LENGTH_LONG).show()
                 }
             })
-
             etWord.text.clear()
-
         }
         btSound.setOnClickListener {
             playSound()

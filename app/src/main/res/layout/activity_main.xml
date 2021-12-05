@@ -13,7 +13,6 @@
         android:hint="Введите слово на анг"
         android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         android:inputType="text"
-        android:imeOptions="actionDone"
         android:minHeight="48dp"
         app:layout_constraintBottom_toTopOf="@+id/btSearch"
         app:layout_constraintEnd_toEndOf="@+id/btSearch"
