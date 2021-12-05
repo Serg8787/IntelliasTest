@@ -4,12 +4,12 @@ import android.content.Context
 import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.os.Bundle
-import android.text.InputType
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.tsybulnik.intelliastest.Api
 import com.tsybulnik.intelliastest.R
@@ -23,8 +23,8 @@ import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
     lateinit var tvMainWord: TextView
-    lateinit var tvPhonetic: TextView
-    lateinit var btSound: ImageButton
+    lateinit var tvPhoneticUK: TextView
+    lateinit var clPhonetic:ConstraintLayout
     lateinit var btSearch: Button
     lateinit var etWord: EditText
     lateinit var uri: String
@@ -33,9 +33,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         tvMainWord = findViewById(R.id.tvMainWord)
-        tvPhonetic = findViewById(R.id.tvPhonetic)
-        btSound = findViewById(R.id.btSound)
+        tvPhoneticUK = findViewById(R.id.tvPhonetic)
         etWord = findViewById(R.id.etEnterWord)
+        clPhonetic = findViewById(R.id.clPhonetic)
         val recyclerView: RecyclerView = findViewById(R.id.recycler)
 
         btSearch = findViewById(R.id.btSearch)
@@ -74,16 +74,14 @@ class MainActivity : AppCompatActivity() {
                         Log.d("MyLog", "map " + map)
                         recyclerView.adapter = WordAdapter(map)
                         tvMainWord.setText(response.body()!![0].word)
-                        tvPhonetic.setText("[ ${response.body()!![0].phonetic} ]")
+                        tvPhoneticUK.setText("[ ${response.body()!![0].phonetic} ]")
                         if (response.body()!!.last().phonetics.isNotEmpty()){
-                            btSound.visibility = View.VISIBLE
-                            tvPhonetic.visibility = View.VISIBLE
+                            clPhonetic.visibility = View.VISIBLE
                             uri = "https:" + response.body()!![0].phonetics[0].audio
                             Log.d("MyLog", "audio " + response.body()!!.last().phonetics[0].audio)
                         } else {
                             Log.d("MyLog", " not audio")
-                            btSound.visibility = View.INVISIBLE
-                            tvPhonetic.visibility = View.INVISIBLE
+                            clPhonetic.visibility = View.INVISIBLE
                         }
                     } else {
                         Toast.makeText(
@@ -100,7 +98,7 @@ class MainActivity : AppCompatActivity() {
             })
             etWord.text.clear()
         }
-        btSound.setOnClickListener {
+        clPhonetic.setOnClickListener {
             playSound()
         }
     }

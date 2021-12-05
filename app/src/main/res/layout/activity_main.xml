@@ -10,8 +10,8 @@
         android:id="@+id/etEnterWord"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Введите слово на анг"
         android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        android:hint="Введите слово на анг"
         android:inputType="text"
         android:minHeight="48dp"
         app:layout_constraintBottom_toTopOf="@+id/btSearch"
@@ -21,50 +21,60 @@
         app:layout_constraintStart_toStartOf="@+id/btSearch" />
 
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clPhonetic"
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="@id/tvMainWord"
+        app:layout_constraintStart_toStartOf="@id/tvMainWord"
+        app:layout_constraintTop_toBottomOf="@+id/tvMainWord">
+
+        <TextView
+            android:id="@+id/tvPhonetic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:padding="4dp"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:src="@drawable/icons8_dinamic"
+            app:layout_constraintBottom_toBottomOf="@+id/tvPhonetic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tvPhonetic"
+            app:layout_constraintTop_toTopOf="@+id/tvPhonetic" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
     <TextView
         android:id="@+id/tvMainWord"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
+        android:layout_marginTop="15dp"
         android:layout_marginEnd="10dp"
         android:fontFamily="@font/basic"
         android:gravity="center"
         android:paddingEnd="3dp"
-        android:layout_marginTop="15dp"
         android:textColor="@android:color/holo_red_light"
-        android:textSize="35sp"
+        android:textSize="45sp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <TextView
-        android:id="@+id/tvPhonetic"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textSize="25sp"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:paddingEnd="3dp"
-        android:gravity="left"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="10dp"
-        app:layout_constraintTop_toBottomOf="@id/tvMainWord"
-        app:layout_constraintStart_toStartOf="@id/tvMainWord"
-        app:layout_constraintEnd_toStartOf="@id/btSound" />
-
-    <ImageButton
-        android:id="@+id/btSound"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/icons8_dinamic"
-        android:background="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/tvPhonetic"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="30dp"
-        android:visibility="invisible"
-        app:layout_constraintStart_toEndOf="@+id/tvPhonetic"
-        app:layout_constraintTop_toTopOf="@+id/tvPhonetic" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <androidx.recyclerview.widget.RecyclerView
@@ -72,12 +82,11 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="15dp"
-        android:layout_marginTop="10dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@+id/etEnterWord"
         app:layout_constraintEnd_toEndOf="@+id/etEnterWord"
         app:layout_constraintStart_toStartOf="@+id/etEnterWord"
-        app:layout_constraintTop_toBottomOf="@+id/tvPhonetic" />
+        app:layout_constraintTop_toBottomOf="@+id/clPhonetic" />
 
 
     <Button
@@ -85,12 +94,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="20dp"
-        android:layout_marginTop="10dp"
         android:text="Search"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
