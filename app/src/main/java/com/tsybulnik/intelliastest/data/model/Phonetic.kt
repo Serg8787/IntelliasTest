@@ -1,4 +1,4 @@
-package com.tsybulnik.intelliastest.domain.entities
+package com.tsybulnik.intelliastest.data.model
 
 data class Phonetic(
     val audio: String,

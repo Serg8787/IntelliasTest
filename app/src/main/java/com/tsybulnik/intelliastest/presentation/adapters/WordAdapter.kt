@@ -1,10 +1,11 @@
-package com.tsybulnik.intelliastest
+package com.tsybulnik.intelliastest.presentation.adapters
 
 import android.view.View
 import android.view.ViewGroup
 import android.view.LayoutInflater
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.tsybulnik.intelliastest.R
 
 
 class WordAdapter(val hashMap: Map<String?, String?>) :  RecyclerView.Adapter<WordAdapter.ViewHolder>() {
