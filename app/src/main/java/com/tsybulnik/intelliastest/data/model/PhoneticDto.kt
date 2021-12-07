@@ -1,6 +1,6 @@
 package com.tsybulnik.intelliastest.data.model
 
-data class Phonetic(
+data class PhoneticDto(
     val audio: String,
     val text: String
 )

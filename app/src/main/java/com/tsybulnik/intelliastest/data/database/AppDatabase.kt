@@ -4,9 +4,9 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.tsybulnik.intelliastest.data.model.WordItem
+import com.tsybulnik.intelliastest.data.model.WordItemDto
 
-@Database(entities = [WordItem::class], version = 1, exportSchema = false)
+@Database(entities = [WordItemDto::class], version = 1, exportSchema = false)
 abstract class AppDatabase :RoomDatabase(){
     companion object {
 

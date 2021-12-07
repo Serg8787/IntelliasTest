@@ -1,6 +1,6 @@
 package com.tsybulnik.intelliastest.data.model
 
-data class Definition(
+data class DefinitionDto(
     val antonyms: List<String>,
     val definition: String,
     val example: String,

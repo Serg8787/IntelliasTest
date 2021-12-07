@@ -1,9 +1,8 @@
 package com.tsybulnik.intelliastest.presentation
 
 import android.content.Context
-import android.media.AudioAttributes
-import android.media.MediaPlayer
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
@@ -25,7 +24,6 @@ class MainActivity : AppCompatActivity() {
     lateinit var clPhonetic: ConstraintLayout
     lateinit var btSearch: Button
     lateinit var etWord: EditText
-    lateinit var uri: String
     private lateinit var vm: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,36 +42,44 @@ class MainActivity : AppCompatActivity() {
         btSearch.setOnClickListener {
             hideKeybord()
             val word: String = etWord.text.toString()
-            etWord.text.clear()
-            vm.loadData(word)
+            vm.getWord(word)
             vm.mainWord.observe(this, Observer {
-                tvMainWord.text = it
-            })
-            vm.phonetic.observe(this, Observer {
-                tvPhonetic.text = it
-            })
-            vm.mapPartOfSpeechDefinion.observe(this, Observer {
-                recyclerView.adapter = WordAdapter(it)
-            })
-            vm.isPhonetic.observe(this, Observer {
-                if (it) {
-                    clPhonetic.visibility = View.INVISIBLE
-                } else {
-                    clPhonetic.visibility = View.VISIBLE
-                }
+                tvMainWord.text = it.toString()
             })
 
-        }
-        vm.errorRightResonse.observe(this, Observer {
-            Toast.makeText(this, it, Toast.LENGTH_LONG).show()
-        })
-        vm.errorRightWord.observe(this, Observer {
-            Toast.makeText(this, it, Toast.LENGTH_LONG).show()
-        })
+            Log.d("MyLog",vm.wordItem.toString())
 
-        clPhonetic.setOnClickListener {
-            playSound()
+
+//            vm.loadData(word)
+//            vm.mainWord.observe(this, Observer {
+//                tvMainWord.text = it
+//            })
+//            vm.phonetic.observe(this, Observer {
+//                tvPhonetic.text = it
+//            })
+//            vm.mapPartOfSpeechDefinion.observe(this, Observer {
+//                recyclerView.adapter = WordAdapter(it)
+//            })
+//            vm.isPhonetic.observe(this, Observer {
+//                if (it) {
+//                    clPhonetic.visibility = View.GONE
+//                } else {
+//                    clPhonetic.visibility = View.VISIBLE
+//                }
+//            })
+            etWord.text.clear()
+
         }
+//        vm.errorRightResponse.observe(this, Observer {
+//            Toast.makeText(this, it, Toast.LENGTH_LONG).show()
+//        })
+//        vm.errorRightWord.observe(this, Observer {
+//            Toast.makeText(this, it, Toast.LENGTH_LONG).show()
+//        })
+//
+//        clPhonetic.setOnClickListener {
+////            vm.soundPhonetic()
+//        }
     }
 
     private fun hideKeybord() {
@@ -84,19 +90,6 @@ class MainActivity : AppCompatActivity() {
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0)
         }
     }
-    fun playSound() {
-        val url = uri
-        val mediaPlayer = MediaPlayer().apply {
-            setAudioAttributes(
-                AudioAttributes.Builder()
-                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                    .setUsage(AudioAttributes.USAGE_MEDIA)
-                    .build()
-            )
-            setDataSource(url)
-            prepare() // might take long! (for buffering, etc)
-            start()
-        }
-    }
-}
+  }
+
 

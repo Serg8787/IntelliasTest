@@ -4,11 +4,11 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "word_data_table")
-data class WordItem(
+data class WordItemDto(
     @PrimaryKey
-    val meanings: List<Meaning>,
+    val meanings: List<MeaningDto>,
     val origin: String,
     val phonetic: String,
-    val phonetics: List<Phonetic>,
+    val phonetics: List<PhoneticDto>,
     val word: String
 )
