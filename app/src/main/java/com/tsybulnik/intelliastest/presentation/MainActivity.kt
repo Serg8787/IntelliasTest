@@ -46,6 +46,12 @@ class MainActivity : AppCompatActivity() {
             vm.mainWord.observe(this, Observer {
                 tvMainWord.text = it
             })
+            vm.phonetic.observe(this, Observer {
+                tvPhonetic.text = it
+            })
+            vm.mapPartOfSpeechDefinion.observe(this, Observer {
+                recyclerView.adapter = WordAdapter(it)
+            })
 
             Log.d("MyLog",vm.wordItem.toString())
 

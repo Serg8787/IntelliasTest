@@ -13,38 +13,52 @@ import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
 
-        private val mainWordMutable = MutableLiveData<String>()
+    private val mainWordMutable = MutableLiveData<String>()
     val mainWord: LiveData<String> = mainWordMutable
-//
-//    private val phoneticWordMutable = MutableLiveData<String>()
-//    val phonetic: LiveData<String> = phoneticWordMutable
-//
-//    private val mapPartOfSpeechDefinionMutable = MutableLiveData<Map<String?, String?>>()
-//    val mapPartOfSpeechDefinion = mapPartOfSpeechDefinionMutable
-//
-//    private val isPhoneticMutable = MutableLiveData<Boolean>()
-//    val isPhonetic = isPhoneticMutable
-//
-//    private val errorRightWordMutable = MutableLiveData<String>()
-//    val errorRightWord: LiveData<String> = errorRightWordMutable
-//
-//    private val errorRightResponseMutable = MutableLiveData<String>()
-//    val errorRightResponse: LiveData<String> = errorRightResponseMutable
-//
-//    private val soundPhoneticMutable = MutableLiveData<String>()
+
+    private val phoneticWordMutable = MutableLiveData<String>()
+    val phonetic: LiveData<String> = phoneticWordMutable
+
+    private val mapPartOfSpeechDefinionMutable = MutableLiveData<Map<String?, String?>>()
+    val mapPartOfSpeechDefinion = mapPartOfSpeechDefinionMutable
+
+    private val isPhoneticMutable = MutableLiveData<Boolean>()
+    val isPhonetic = isPhoneticMutable
+
+    private val errorRightWordMutable = MutableLiveData<String>()
+    val errorRightWord: LiveData<String> = errorRightWordMutable
+
+    private val errorRightResponseMutable = MutableLiveData<String>()
+    val errorRightResponse: LiveData<String> = errorRightResponseMutable
+
+    //    private val soundPhoneticMutable = MutableLiveData<String>()
 //    val soundPhonetic: LiveData<String> = soundPhoneticMutable
 //
     private val repository = WordRepositoryImpl()
     private val getWordItemUseCase = GetWordItemUseCase(repository)
 
-    private val scope =  CoroutineScope(Dispatchers.IO)
+    private val scope = CoroutineScope(Dispatchers.Main)
 
     val wordItem = getWordItemUseCase
 
 
-    fun getWord(word:String){
+    fun getWord(word: String) {
         scope.launch {
-          mainWordMutable.postValue( getWordItemUseCase(word).word)
+            mainWordMutable.postValue(getWordItemUseCase(word).word)
+            phoneticWordMutable.postValue(getWordItemUseCase(word).phonetic)
+            val size: Int = getWordItemUseCase(word).meanings.size
+//            val arraydefinition = arrayOfNulls<String>(size)
+//            val arrayPartOfSpeech = arrayOfNulls<String>(size)
+//                    for (i in 0 until size) {
+//                        for (i in 0 until size) {
+//                            arrayPartOfSpeech[i] =
+//                               getWordItemUseCase(word).meanings[i].partOfSpeech
+//                            arraydefinition[i] =
+//                                getWordItemUseCase(word)
+//                                  .meanings[i].definitions.first().definition
+//                        }
+//                    }
+//                    mapPartOfSpeechDefinionMutable.postValue(arrayPartOfSpeech.zip(arraydefinition).toMap())
         }
     }
 
@@ -52,15 +66,6 @@ class MainViewModel : ViewModel() {
         super.onCleared()
         scope.cancel()
     }
-
-
-
-
-
-
-
-
-
 
 
 //    fun loadData(word: String) {
