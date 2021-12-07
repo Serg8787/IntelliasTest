@@ -17,8 +17,13 @@ class WordRepositoryImpl(
 
 
     override suspend fun getWord(word: String): WordItemDomain {
-
-        val wordItemDto= apiService.getDataFromWord(word)
-         return mapper.mapDtoModelToEntityWordItem(wordItemDto)
+        return try {
+            val wordItemDto= apiService.getDataFromWord(word)
+            mapper.mapDtoModelToEntityWordItem(wordItemDto)
+        } catch (e:Exception){
+            WordItemDomain(emptyList(), null.toString(), null.toString(), emptyList(),
+                null.toString()
+            )
+        }
     }
 }

@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.tsybulnik.intelliastest.data.repository.WordRepositoryImpl
 import com.tsybulnik.intelliastest.domain.GetWordItemUseCase
+import com.tsybulnik.intelliastest.domain.WordItemDomain
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
@@ -13,23 +14,26 @@ import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
 
-    private val mainWordMutable = MutableLiveData<String>()
-    val mainWord: LiveData<String> = mainWordMutable
+    private var wordMutable = MutableLiveData<WordItemDomain>()
+    val word:LiveData<WordItemDomain> = wordMutable
 
-    private val phoneticWordMutable = MutableLiveData<String>()
-    val phonetic: LiveData<String> = phoneticWordMutable
-
-    private val mapPartOfSpeechDefinionMutable = MutableLiveData<Map<String?, String?>>()
-    val mapPartOfSpeechDefinion = mapPartOfSpeechDefinionMutable
-
-    private val isPhoneticMutable = MutableLiveData<Boolean>()
-    val isPhonetic = isPhoneticMutable
-
-    private val errorRightWordMutable = MutableLiveData<String>()
-    val errorRightWord: LiveData<String> = errorRightWordMutable
-
-    private val errorRightResponseMutable = MutableLiveData<String>()
-    val errorRightResponse: LiveData<String> = errorRightResponseMutable
+//    private val mainWordMutable = MutableLiveData<String>()
+//    val mainWord: LiveData<String> = mainWordMutable
+//
+//    private val phoneticWordMutable = MutableLiveData<String>()
+//    val phonetic: LiveData<String> = phoneticWordMutable
+//
+//    private val mapPartOfSpeechDefinionMutable = MutableLiveData<Map<String?, String?>>()
+//    val mapPartOfSpeechDefinion = mapPartOfSpeechDefinionMutable
+//
+//    private val isPhoneticMutable = MutableLiveData<Boolean>()
+//    val isPhonetic = isPhoneticMutable
+//
+//    private val errorRightWordMutable = MutableLiveData<String>()
+//    val errorRightWord: LiveData<String> = errorRightWordMutable
+//
+//    private val errorRightResponseMutable = MutableLiveData<String>()
+//    val errorRightResponse: LiveData<String> = errorRightResponseMutable
 
     //    private val soundPhoneticMutable = MutableLiveData<String>()
 //    val soundPhonetic: LiveData<String> = soundPhoneticMutable
@@ -39,33 +43,37 @@ class MainViewModel : ViewModel() {
 
     private val scope = CoroutineScope(Dispatchers.Main)
 
-    val wordItem = getWordItemUseCase
-
-
-
-
-
-
-    fun getWord(word: String) {
+    fun getData(word: String){
         scope.launch {
-            getWordItemUseCase(word)
-            mainWordMutable.postValue(getWordItemUseCase(word).word)
-            phoneticWordMutable.postValue(getWordItemUseCase(word).phonetic)
-            val size: Int = getWordItemUseCase(word).meanings.size
-            val arraydefinition = arrayOfNulls<String>(size)
-            val arrayPartOfSpeech = arrayOfNulls<String>(size)
-                    for (i in 0 until size) {
-                        for (i in 0 until size) {
-                            arrayPartOfSpeech[i] =
-                               getWordItemUseCase(word).meanings[i].partOfSpeech
-                            arraydefinition[i] =
-                                getWordItemUseCase(word)
-                                  .meanings[i].definitions.first().definition
-                        }
-                    }
-                    mapPartOfSpeechDefinionMutable.postValue(arrayPartOfSpeech.zip(arraydefinition).toMap())
+            wordMutable.value = getWordItemUseCase(word)
         }
     }
+
+
+
+
+
+
+//    fun getWord(word: String) {
+//        scope.launch {
+//            getWordItemUseCase(word)
+//            mainWordMutable.postValue(getWordItemUseCase(word).word)
+//            phoneticWordMutable.postValue(getWordItemUseCase(word).phonetic)
+//            val size: Int = getWordItemUseCase(word).meanings.size
+//            val arraydefinition = arrayOfNulls<String>(size)
+//            val arrayPartOfSpeech = arrayOfNulls<String>(size)
+//                    for (i in 0 until size) {
+//                        for (i in 0 until size) {
+//                            arrayPartOfSpeech[i] =
+//                               getWordItemUseCase(word).meanings[i].partOfSpeech
+//                            arraydefinition[i] =
+//                                getWordItemUseCase(word)
+//                                  .meanings[i].definitions.first().definition
+//                        }
+//                    }
+//                    mapPartOfSpeechDefinionMutable.postValue(arrayPartOfSpeech.zip(arraydefinition).toMap())
+//        }
+//    }
 
     override fun onCleared() {
         super.onCleared()

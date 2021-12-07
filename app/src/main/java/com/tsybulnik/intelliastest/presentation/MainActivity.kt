@@ -2,13 +2,11 @@ package com.tsybulnik.intelliastest.presentation
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
@@ -42,31 +40,21 @@ class MainActivity : AppCompatActivity() {
         btSearch.setOnClickListener {
             hideKeybord()
             val word: String = etWord.text.toString()
-            vm.getWord(word)
-            vm.mainWord.observe(this, Observer {
-                tvMainWord.text = it
+            vm.getData(word)
+            vm.word.observe(this, Observer {
+                tvMainWord.text = it.word
+                tvPhonetic.text = it.phonetic
+                val size: Int = it.meanings.size
+                val arraydefinition = arrayOfNulls<String>(size)
+                val arrayPartOfSpeech = arrayOfNulls<String>(size)
+                for (i in 0 until size) {
+                    arrayPartOfSpeech[i] = it.meanings[i].partOfSpeech
+                    arraydefinition[i] = it.meanings[i].definitions.first().definition
+                }
+                val map = arrayPartOfSpeech.zip(arraydefinition).toMap()
+                recyclerView.adapter = WordAdapter(map)
+
             })
-            vm.phonetic.observe(this, Observer {
-                tvPhonetic.text = it
-            })
-            vm.mapPartOfSpeechDefinion.observe(this, Observer {
-                recyclerView.adapter = WordAdapter(it)
-            })
-
-
-            Log.d("MyLog",vm.wordItem.toString())
-
-
-//            vm.loadData(word)
-//            vm.mainWord.observe(this, Observer {
-//                tvMainWord.text = it
-//            })
-//            vm.phonetic.observe(this, Observer {
-//                tvPhonetic.text = it
-//            })
-//            vm.mapPartOfSpeechDefinion.observe(this, Observer {
-//                recyclerView.adapter = WordAdapter(it)
-//            })
 //            vm.isPhonetic.observe(this, Observer {
 //                if (it) {
 //                    clPhonetic.visibility = View.GONE
@@ -97,6 +85,6 @@ class MainActivity : AppCompatActivity() {
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0)
         }
     }
-  }
+}
 
 
