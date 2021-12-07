@@ -42,23 +42,28 @@ class MainViewModel : ViewModel() {
     val wordItem = getWordItemUseCase
 
 
+
+
+
+
     fun getWord(word: String) {
         scope.launch {
+            getWordItemUseCase(word)
             mainWordMutable.postValue(getWordItemUseCase(word).word)
             phoneticWordMutable.postValue(getWordItemUseCase(word).phonetic)
             val size: Int = getWordItemUseCase(word).meanings.size
-//            val arraydefinition = arrayOfNulls<String>(size)
-//            val arrayPartOfSpeech = arrayOfNulls<String>(size)
-//                    for (i in 0 until size) {
-//                        for (i in 0 until size) {
-//                            arrayPartOfSpeech[i] =
-//                               getWordItemUseCase(word).meanings[i].partOfSpeech
-//                            arraydefinition[i] =
-//                                getWordItemUseCase(word)
-//                                  .meanings[i].definitions.first().definition
-//                        }
-//                    }
-//                    mapPartOfSpeechDefinionMutable.postValue(arrayPartOfSpeech.zip(arraydefinition).toMap())
+            val arraydefinition = arrayOfNulls<String>(size)
+            val arrayPartOfSpeech = arrayOfNulls<String>(size)
+                    for (i in 0 until size) {
+                        for (i in 0 until size) {
+                            arrayPartOfSpeech[i] =
+                               getWordItemUseCase(word).meanings[i].partOfSpeech
+                            arraydefinition[i] =
+                                getWordItemUseCase(word)
+                                  .meanings[i].definitions.first().definition
+                        }
+                    }
+                    mapPartOfSpeechDefinionMutable.postValue(arrayPartOfSpeech.zip(arraydefinition).toMap())
         }
     }
 

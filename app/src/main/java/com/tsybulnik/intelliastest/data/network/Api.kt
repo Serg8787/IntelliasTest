@@ -10,5 +10,5 @@ import retrofit2.http.Path
 
 interface Api {
     @GET("api/v2/entries/en/{wordEng}")
-   suspend fun getDataFromWord(@Path("wordEng") wordEng:String): List<WordItemDto>
+   suspend fun getDataFromWord(@Path("wordEng") wordEng:String): ArrayList<WordItemDto>
 }

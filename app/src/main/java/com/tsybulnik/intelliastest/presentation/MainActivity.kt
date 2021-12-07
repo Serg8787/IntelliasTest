@@ -53,6 +53,7 @@ class MainActivity : AppCompatActivity() {
                 recyclerView.adapter = WordAdapter(it)
             })
 
+
             Log.d("MyLog",vm.wordItem.toString())
 
 

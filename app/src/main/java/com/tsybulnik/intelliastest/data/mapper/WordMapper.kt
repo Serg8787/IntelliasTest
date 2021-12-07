@@ -5,12 +5,12 @@ import com.tsybulnik.intelliastest.domain.WordItemDomain
 
 class WordMapper {
 
-    fun mapDtoModelToEntityWordItem(wordItemDtoList: List<WordItemDto>) = WordItemDomain(
-        word = wordItemDtoList[0].word,
-        phonetics = wordItemDtoList[0].phonetics,
-        phonetic = wordItemDtoList[0].phonetic,
-        origin = wordItemDtoList[0].origin,
-        meanings = wordItemDtoList[0].meanings,
+    fun mapDtoModelToEntityWordItem(wordItemDtoList: ArrayList<WordItemDto>) = WordItemDomain(
+        word = wordItemDtoList.first().word,
+        phonetics = wordItemDtoList.first().phonetics,
+        phonetic = wordItemDtoList.first().phonetic,
+        origin = wordItemDtoList.first().origin,
+        meanings = wordItemDtoList.first().meanings,
 
         )
 

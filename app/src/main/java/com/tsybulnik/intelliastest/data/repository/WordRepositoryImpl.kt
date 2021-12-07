@@ -14,7 +14,7 @@ class WordRepositoryImpl(
 
 ) : WordRepository {
     private val mapper = WordMapper()
-    val customScope = CoroutineScope(Dispatchers.Main)
+
 
     override suspend fun getWord(word: String): WordItemDomain {
 
