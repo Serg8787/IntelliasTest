@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
             val word: String = etWord.text.toString()
             vm.getWord(word)
             vm.mainWord.observe(this, Observer {
-                tvMainWord.text = it.toString()
+                tvMainWord.text = it
             })
 
             Log.d("MyLog",vm.wordItem.toString())

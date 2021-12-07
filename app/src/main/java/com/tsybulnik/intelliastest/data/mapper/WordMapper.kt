@@ -1,17 +1,20 @@
 package com.tsybulnik.intelliastest.data.mapper
 
 import com.tsybulnik.intelliastest.data.model.WordItemDto
-import com.tsybulnik.intelliastest.domain.WordItem
+import com.tsybulnik.intelliastest.domain.WordItemDomain
 
 class WordMapper {
 
-    fun mapDtoModelToEntity(worfItemDto: WordItemDto) = WordItem(
-        word = worfItemDto.word,
-        meanings = worfItemDto.meanings,
-        origin = worfItemDto.origin,
-        phonetic = worfItemDto.phonetic,
-        phonetics = worfItemDto.phonetics
-    )
+    fun mapDtoModelToEntityWordItem(wordItemDtoList: List<WordItemDto>) = WordItemDomain(
+        word = wordItemDtoList[0].word,
+        phonetics = wordItemDtoList[0].phonetics,
+        phonetic = wordItemDtoList[0].phonetic,
+        origin = wordItemDtoList[0].origin,
+        meanings = wordItemDtoList[0].meanings,
+
+        )
+
+
 }
 
 

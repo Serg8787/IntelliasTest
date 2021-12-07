@@ -4,10 +4,8 @@ package com.tsybulnik.intelliastest.presentation
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.tsybulnik.intelliastest.data.repository.WordRepositoryImpl
 import com.tsybulnik.intelliastest.domain.GetWordItemUseCase
-import com.tsybulnik.intelliastest.domain.WordItem
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
@@ -46,7 +44,7 @@ class MainViewModel : ViewModel() {
 
     fun getWord(word:String){
         scope.launch {
-          mainWordMutable.value = getWordItemUseCase(word).meanings.toString()
+          mainWordMutable.postValue( getWordItemUseCase(word).word)
         }
     }
 
