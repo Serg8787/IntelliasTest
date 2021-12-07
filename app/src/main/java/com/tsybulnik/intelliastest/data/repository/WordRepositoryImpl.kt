@@ -21,8 +21,8 @@ class WordRepositoryImpl(
             val wordItemDto= apiService.getDataFromWord(word)
             mapper.mapDtoModelToEntityWordItem(wordItemDto)
         } catch (e:Exception){
-            WordItemDomain(emptyList(), null.toString(), null.toString(), emptyList(),
-                null.toString()
+            WordItemDomain(emptyList(), "No Definitions Found", "", emptyList(),
+                "No Definitions Found"
             )
         }
     }
