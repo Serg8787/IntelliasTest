@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 data class WordItemDto(
     @PrimaryKey
     val meanings: List<MeaningDto>,
-    val origin: String,
+    val origin: String?,
     val phonetic: String,
     val phonetics: List<PhoneticDto>,
     val word: String

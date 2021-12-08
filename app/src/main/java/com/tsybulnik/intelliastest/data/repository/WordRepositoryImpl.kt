@@ -1,12 +1,11 @@
 package com.tsybulnik.intelliastest.data.repository
 
+import android.util.Log
 import com.tsybulnik.intelliastest.data.mapper.WordMapper
 import com.tsybulnik.intelliastest.data.network.Api
 import com.tsybulnik.intelliastest.data.network.ApiFactory
 import com.tsybulnik.intelliastest.domain.WordItemDomain
 import com.tsybulnik.intelliastest.domain.WordRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 
 class WordRepositoryImpl(
     private val apiService: Api = ApiFactory.apiService
@@ -19,9 +18,9 @@ class WordRepositoryImpl(
             val wordItemDto= apiService.getDataFromWord(word)
             mapper.mapDtoModelToEntityWordItem(wordItemDto)
         } catch (e:Exception){
+            Log.d("MyLog",e.toString())
             WordItemDomain(emptyList(), "", "", emptyList(),
-                "No Definitions Found"
-            )
+                "No Definitions Found")
         }
     }
 }

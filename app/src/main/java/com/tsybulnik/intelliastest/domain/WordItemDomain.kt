@@ -5,7 +5,7 @@ import com.tsybulnik.intelliastest.data.model.PhoneticDto
 
 data class WordItemDomain(
     val meanings: List<MeaningDto>,
-    val origin: String,
+    val origin: String?,
     val phonetic: String,
     val phonetics: List<PhoneticDto>,
     val word: String

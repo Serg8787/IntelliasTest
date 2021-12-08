@@ -1,6 +1,5 @@
 package com.tsybulnik.intelliastest.data.mapper
 
-import com.tsybulnik.intelliastest.data.model.PhoneticDto
 import com.tsybulnik.intelliastest.data.model.WordItemDto
 import com.tsybulnik.intelliastest.domain.WordItemDomain
 
@@ -14,9 +13,6 @@ class WordMapper {
             meanings = wordItemDtoList.first().meanings
         )
     }
-
-
-
 }
 
 
