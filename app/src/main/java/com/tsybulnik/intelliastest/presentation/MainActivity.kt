@@ -1,49 +1,38 @@
 package com.tsybulnik.intelliastest.presentation
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.RecyclerView
-import com.tsybulnik.intelliastest.R
+import com.tsybulnik.intelliastest.databinding.ActivityMainBinding
 import com.tsybulnik.intelliastest.presentation.adapters.WordAdapter
 
 
 class MainActivity : AppCompatActivity() {
-    lateinit var tvMainWord: TextView
-    lateinit var tvPhonetic: TextView
-    lateinit var clPhonetic: ConstraintLayout
-    lateinit var btSearch: Button
-    lateinit var etWord: EditText
     private lateinit var vm: MainViewModel
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        val binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+
         vm = ViewModelProvider(this).get(MainViewModel::class.java)
 
-        tvMainWord = findViewById(R.id.tvMainWord)
-        tvPhonetic = findViewById(R.id.tvPhonetic)
-        etWord = findViewById(R.id.etEnterWord)
-        clPhonetic = findViewById(R.id.clPhonetic)
-        val recyclerView: RecyclerView = findViewById(R.id.recycler)
-
-        btSearch = findViewById(R.id.btSearch)
-
-        btSearch.setOnClickListener {
+        binding.btSearch.setOnClickListener {
             hideKeybord()
-            val word: String = etWord.text.toString()
+            val word: String = binding.etEnterWord.text.toString()
             vm.getData(word)
-            vm.word.observe(this, Observer {
-                tvMainWord.text = it.word
-                tvPhonetic.text = it.phonetic
+            vm.word.observe(this, {
+                binding.tvMainWord.text = it.word
+                binding.tvPhonetic.text = "[ ${it.phonetics.first().text} ]"
+                binding.tvOrigin.text = it.origin
                 val size: Int = it.meanings.size
                 val arraydefinition = arrayOfNulls<String>(size)
                 val arrayPartOfSpeech = arrayOfNulls<String>(size)
@@ -52,11 +41,9 @@ class MainActivity : AppCompatActivity() {
                     arraydefinition[i] = it.meanings[i].definitions.first().definition
                 }
                 val map = arrayPartOfSpeech.zip(arraydefinition).toMap()
-                recyclerView.adapter = WordAdapter(map)
-
+                binding.recycler.adapter = WordAdapter(map)
             })
-            etWord.text.clear()
-
+            binding.etEnterWord.text.clear()
         }
     }
 
