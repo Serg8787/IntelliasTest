@@ -17,27 +17,9 @@ class MainViewModel : ViewModel() {
     private var wordMutable = MutableLiveData<WordItemDomain>()
     val word:LiveData<WordItemDomain> = wordMutable
 
-//    private val mainWordMutable = MutableLiveData<String>()
-//    val mainWord: LiveData<String> = mainWordMutable
-//
-//    private val phoneticWordMutable = MutableLiveData<String>()
-//    val phonetic: LiveData<String> = phoneticWordMutable
-//
-//    private val mapPartOfSpeechDefinionMutable = MutableLiveData<Map<String?, String?>>()
-//    val mapPartOfSpeechDefinion = mapPartOfSpeechDefinionMutable
-//
-//    private val isPhoneticMutable = MutableLiveData<Boolean>()
-//    val isPhonetic = isPhoneticMutable
-//
-//    private val errorRightWordMutable = MutableLiveData<String>()
-//    val errorRightWord: LiveData<String> = errorRightWordMutable
-//
-//    private val errorRightResponseMutable = MutableLiveData<String>()
-//    val errorRightResponse: LiveData<String> = errorRightResponseMutable
-
     //    private val soundPhoneticMutable = MutableLiveData<String>()
 //    val soundPhonetic: LiveData<String> = soundPhoneticMutable
-//
+
     private val repository = WordRepositoryImpl()
     private val getWordItemUseCase = GetWordItemUseCase(repository)
 
@@ -49,80 +31,11 @@ class MainViewModel : ViewModel() {
         }
     }
 
-
-
-
-
-
-//    fun getWord(word: String) {
-//        scope.launch {
-//            getWordItemUseCase(word)
-//            mainWordMutable.postValue(getWordItemUseCase(word).word)
-//            phoneticWordMutable.postValue(getWordItemUseCase(word).phonetic)
-//            val size: Int = getWordItemUseCase(word).meanings.size
-//            val arraydefinition = arrayOfNulls<String>(size)
-//            val arrayPartOfSpeech = arrayOfNulls<String>(size)
-//                    for (i in 0 until size) {
-//                        for (i in 0 until size) {
-//                            arrayPartOfSpeech[i] =
-//                               getWordItemUseCase(word).meanings[i].partOfSpeech
-//                            arraydefinition[i] =
-//                                getWordItemUseCase(word)
-//                                  .meanings[i].definitions.first().definition
-//                        }
-//                    }
-//                    mapPartOfSpeechDefinionMutable.postValue(arrayPartOfSpeech.zip(arraydefinition).toMap())
-//        }
-//    }
-
     override fun onCleared() {
         super.onCleared()
         scope.cancel()
     }
 
-
-//    fun loadData(word: String) {
-//        val retrofit = ApiFactory.getClient("https://api.dictionaryapi.dev/")
-//            .create(Api::class.java)
-//        retrofit.getDataFromWord(word).enqueue(object : Callback<List<WordItemDto>> {
-//            override fun onResponse(
-//                call: Call<List<WordItemDto>>,
-//                response: Response<List<WordItemDto>>
-//            ) {
-//                if (response.isSuccessful) {
-//                    mainWordMutable.value = response.body()!!.first().word
-//                    phoneticWordMutable.value = "[ ${response.body()!!.first().phonetic} ]"
-//                    val size: Int = response.body()!!.last().meanings.size
-//                    val arrayPartOfSpeech = arrayOfNulls<String>(size)
-//                    val arraydefinition = arrayOfNulls<String>(size)
-//                    for (i in 0 until size) {
-//                        for (i in 0 until size) {
-//                            arrayPartOfSpeech[i] =
-//                                response.body()!!.first().meanings[i].partOfSpeech
-//                            arraydefinition[i] =
-//                                response.body()!!
-//                                    .first().meanings[i].definitions.first().definition
-//                        }
-//                    }
-//                    mapPartOfSpeechDefinionMutable.value =
-//                        arrayPartOfSpeech.zip(arraydefinition).toMap()
-//                    if (response.body()!!.first().phonetics.isNotEmpty()) {
-//                        isPhoneticMutable.value = false
-////                        soundPhonetic("https:" + response.body()!!.first().phonetics.first().audio)
-//                        } else {
-//                         isPhoneticMutable.value= true
-//                        }
-//                } else {
-//                  errorRightWordMutable.value = "Введите корректное слово на английском языке"
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<List<WordItemDto>>, t: Throwable) {
-//               errorRightResponseMutable.value = "Ошибка запроса! Возможно пропал интернет?"
-//            }
-//
-//        })
-//    }
 //    fun soundPhonetic(sound:String){
 //        val url:String = sound
 //        val mediaPlayer = MediaPlayer().apply {

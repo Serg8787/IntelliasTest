@@ -55,26 +55,9 @@ class MainActivity : AppCompatActivity() {
                 recyclerView.adapter = WordAdapter(map)
 
             })
-//            vm.isPhonetic.observe(this, Observer {
-//                if (it) {
-//                    clPhonetic.visibility = View.GONE
-//                } else {
-//                    clPhonetic.visibility = View.VISIBLE
-//                }
-//            })
             etWord.text.clear()
 
         }
-//        vm.errorRightResponse.observe(this, Observer {
-//            Toast.makeText(this, it, Toast.LENGTH_LONG).show()
-//        })
-//        vm.errorRightWord.observe(this, Observer {
-//            Toast.makeText(this, it, Toast.LENGTH_LONG).show()
-//        })
-//
-//        clPhonetic.setOnClickListener {
-////            vm.soundPhonetic()
-//        }
     }
 
     private fun hideKeybord() {

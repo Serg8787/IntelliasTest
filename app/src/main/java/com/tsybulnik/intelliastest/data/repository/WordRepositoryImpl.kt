@@ -10,8 +10,6 @@ import kotlinx.coroutines.Dispatchers
 
 class WordRepositoryImpl(
     private val apiService: Api = ApiFactory.apiService
-
-
 ) : WordRepository {
     private val mapper = WordMapper()
 
@@ -21,7 +19,7 @@ class WordRepositoryImpl(
             val wordItemDto= apiService.getDataFromWord(word)
             mapper.mapDtoModelToEntityWordItem(wordItemDto)
         } catch (e:Exception){
-            WordItemDomain(emptyList(), "No Definitions Found", "", emptyList(),
+            WordItemDomain(emptyList(), "", "", emptyList(),
                 "No Definitions Found"
             )
         }
